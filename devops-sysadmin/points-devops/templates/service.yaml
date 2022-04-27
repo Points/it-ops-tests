@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "points-devops.fullname" . }}
+  labels:
+    {{- include "points-devops.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      nodePort: 30000
+      name: http
+  selector:
+    {{- include "points-devops.selectorLabels" . | nindent 4 }}
+    colour: blue
